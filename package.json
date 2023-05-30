@@ -1,0 +1,216 @@
+{
+  "name": "jira-issue",
+  "displayName": "jira-issue",
+  "description": "make jira issue easier to find",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.78.0"
+  },
+  "author": "Dlouxgit",
+  "categories": [
+    "Other"
+  ],
+  "keywords": [
+    "jira",
+    "issues",
+    "bugs",
+    "list",
+    "tracking"
+  ],
+  "activationEvents": [
+    "onView:jiraIssues"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "jira-issue",
+          "title": "jira-issue",
+          "icon": "./assets/jira-logo.png"
+        }
+      ]
+    },
+    "views": {
+      "jira-issue": [
+        {
+          "id": "jira-issue",
+          "name": "jira-issue"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "jira-issue.bearer",
+        "title": "set your jira bearer"
+      },
+      {
+        "command": "jira-issue.baseUrl",
+        "title": "set your jira base url"
+      },
+      {
+        "command": "jira-issue.username",
+        "title": "set your jira username"
+      },
+      {
+        "command": "jira-issue.password",
+        "title": "set your jira password"
+      },
+      {
+        "command": "jira-issue.refresh",
+        "title": "Refresh",
+        "icon": {
+          "light": "./assets/light/refresh.svg",
+          "dark": "./assets/dark/refresh.svg"
+        }
+      },
+      {
+        "command": "jira-issue.filter",
+        "title": "Filter",
+        "icon": {
+          "light": "./assets/light/filter.svg",
+          "dark": "./assets/dark/filter.svg"
+        }
+      },
+      {
+        "command": "jira-issue.assignToMe",
+        "title": "Assign To Me",
+        "icon": {
+          "light": "./assets/light/assignToMe.svg",
+          "dark": "./assets/dark/assignToMe.svg"
+        }
+      },
+      {
+        "command": "jira-issue.openIssue",
+        "title": "Open Issue"
+      },
+      {
+        "command": "jira-issue.copyJiraIssue",
+        "title": "Copy Issue Number",
+        "icon": {
+          "light": "./assets/light/copy.svg",
+          "dark": "./assets/dark/copy.svg"
+        }
+      }
+    ],
+    "menus": {
+      "view/title": [
+        {
+          "command": "jira-issue.refresh",
+          "when": "view == jira-issue",
+          "group": "navigation"
+        },
+        {
+          "command": "jira-issue.filter",
+          "when": "view == jira-issue",
+          "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "jira-issue.openIssue",
+          "when": "view == jira-issue && viewItem == issue",
+          "group": "1_navigation"
+        },
+        {
+          "command": "jira-issue.copyJiraIssue",
+          "when": "view == jira-issue && viewItem == issue",
+          "group": "9_cutcopypaste"
+        },
+        {
+          "command": "jira-issue.copyJiraIssue",
+          "when": "view == jira-issue  && viewItem == issue",
+          "group": "inline"
+        },
+        {
+          "command": "jira-issue.assignToMe",
+          "when": "view == jira-issue  && viewItem == issue",
+          "group": "inline"
+        },
+        {
+          "command": "jira-issue.assignToMe",
+          "when": "view == jira-issue  && viewItem == issue",
+          "group": "assignToMe@2"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "jira-issue.bearer",
+        "key": "Cmd+Shift+[",
+        "mac": "Cmd+Shift+[",
+        "win": "Ctrl+Shift+["
+      },
+      {
+        "command": "jira-issue.baseUrl",
+        "key": "Cmd+Shift+]",
+        "mac": "Cmd+Shift+]",
+        "win": "Ctrl+Shift+]"
+      },
+      {
+        "command": "jira-issue.username",
+        "key": "Cmd+Shift+-",
+        "mac": "Cmd+Shift+-",
+        "win": "Ctrl+Shift+-"
+      },
+      {
+        "command": "jira-issue.password",
+        "key": "Cmd+Shift+\\",
+        "mac": "Cmd+Shift+\\",
+        "win": "Ctrl+Shift+\\"
+      }
+    ],
+    "configuration": {
+      "title": "jira-issue Configuration",
+      "properties": {
+        "jira-issue.bearer": {
+          "type": "string",
+          "default": "",
+          "description": "Your jira bearer token"
+        },
+        "jira-issue.username": {
+          "type": "string",
+          "default": "",
+          "description": "Your jira username"
+        },
+        "jira-issue.password": {
+          "type": "string",
+          "default": "",
+          "description": "Your jira password"
+        },
+        "jira-issue.baseUrl": {
+          "type": "string",
+          "default": "",
+          "description": "Your jira base url"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "pnpm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "pnpm run compile && pnpm run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/copy-paste": "^1.1.30",
+    "@types/glob": "^8.1.0",
+    "@types/jira-client": "^7.1.6",
+    "@types/mocha": "^10.0.1",
+    "@types/node": "16.x",
+    "@types/vscode": "^1.78.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.1",
+    "@typescript-eslint/parser": "^5.59.1",
+    "@vscode/test-electron": "^2.3.0",
+    "eslint": "^8.39.0",
+    "glob": "^8.1.0",
+    "mocha": "^10.2.0",
+    "typescript": "^5.0.4"
+  },
+  "dependencies": {
+    "copy-paste": "^1.5.3",
+    "jira-client": "^8.2.2"
+  }
+}
