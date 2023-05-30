@@ -1,12 +1,13 @@
 {
   "name": "jira-issue",
   "displayName": "jira-issue",
-  "description": "make jira issue easier to find",
+  "description": "Make Jira issue operations easier.",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.78.0"
   },
   "author": "Dlouxgit",
+  "publisher": "dloux",
   "categories": [
     "Other"
   ],
@@ -17,6 +18,11 @@
     "list",
     "tracking"
   ],
+  "icon": "assets/jira-logo.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Dlouxgit/vscode-jira-plugin"
+  },
   "activationEvents": [
     "onView:jiraIssues"
   ],
@@ -199,12 +205,12 @@
     "@types/glob": "^8.1.0",
     "@types/jira-client": "^7.1.6",
     "@types/mocha": "^10.0.1",
-    "@types/node": "16.x",
-    "@types/vscode": "^1.78.0",
-    "@typescript-eslint/eslint-plugin": "^5.59.1",
-    "@typescript-eslint/parser": "^5.59.1",
-    "@vscode/test-electron": "^2.3.0",
-    "eslint": "^8.39.0",
+    "@types/node": "^16.18.34",
+    "@types/vscode": "^1.78.1",
+    "@typescript-eslint/eslint-plugin": "^5.59.8",
+    "@typescript-eslint/parser": "^5.59.8",
+    "@vscode/test-electron": "^2.3.2",
+    "eslint": "^8.41.0",
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "typescript": "^5.0.4"

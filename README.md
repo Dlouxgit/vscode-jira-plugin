@@ -32,7 +32,6 @@ Right click on the tree item and a menu will appear:
 
 Hover over any jira issue and you can see two icons at the end of the row, click on them will trigger copy and assign to me.
 
-
 The icons in the upper right corner of the main sidebar are refresh and filter.
 
 ## Set up
@@ -49,7 +48,6 @@ Here are some keybinds you can use:
 - Use `Cmd+Shift+]` to set the base url
 - Use `Cmd+Shift+-` to set the username
 - Use `Cmd+Shift+\` to set the password
-
 
 ## License
 [MIT](./License.md)
