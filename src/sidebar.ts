@@ -35,6 +35,7 @@ service.setConfiguration(mergeConfig);
 const emojiMap = {
   Open: "🆕",
   "In Progress": "🕐",
+  "Doing": "🕐",
   Resolved: "👍",
   Done: "✅",
   Closed: "🚪",
@@ -129,7 +130,11 @@ export class JiraIssueProvider
     }
     let jqlList = [];
     if (mergeConfig.project) {
-      jqlList.push(`project = "${mergeConfig.project}"`);
+      if (typeof mergeConfig.project === 'string') {
+        jqlList.push(`project = "${mergeConfig.project}"`);
+      } else if (Array.isArray(mergeConfig.project)) {
+        jqlList.push(`project IN (${mergeConfig.project.join(', ')})`);
+      }
     }
     if (this.isFilterByCurrentUser) {
       jqlList.push("assignee = currentUser()");
@@ -150,7 +155,7 @@ export class JiraIssueProvider
     }
     try {
       return await service
-        .searchWithQueryFromConfig(jqlList.join(" AND "))
+        .searchWithQueryFromConfig(jqlList.join(" AND ") + ' ORDER BY updatedDate DESC')
         .then((data) => {
           const children = data?.issues.map((issue: IJiraIssue) => {
             const isBug = issue.fields.issuetype.name === "Bug";

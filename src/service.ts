@@ -8,7 +8,7 @@ export interface IBaseConfig {
     apiToken?: string;
     jqlExpression?: string;
     password?: string; // deprecated
-    project?: string;
+    project?: string | string[];
 }
 
 export interface IJiraIssue {
