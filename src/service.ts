@@ -11,13 +11,47 @@ export interface IBaseConfig {
     project?: string;
 }
 
+export interface IJiraIssue {
+    id: string;
+    key: string;
+    fields: {
+      summary: string;
+      description: string;
+      created: string;
+      updated: string;
+      assignee?: {
+        accountId: string;
+        displayName: string;
+        emailAddress: string;
+        active: boolean;
+        name: string;
+      };
+      reporter?: {
+        accountId: string;
+        displayName: string;
+        emailAddress: string;
+        active: boolean;
+      };
+      status: {
+        name: string;
+      };
+      priority: {
+        name: string;
+      };
+      issuetype: {
+        name: string;
+      };
+    };
+    self: string
+  }
+
 interface IExtensionConfig extends WorkspaceConfiguration, IBaseConfig {}
 
 class Service {
     public isInFaultedState: boolean = false;
     public errorMessage: string = '';
     private api!: JiraApi | null;
-    private config: IExtensionConfig | null = null;
+    public config: IExtensionConfig | null = null;
 
     async setConfiguration(config: IExtensionConfig) {
         try {

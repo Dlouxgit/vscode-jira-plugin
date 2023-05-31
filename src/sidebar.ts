@@ -2,7 +2,7 @@ import * as vscode from "vscode";
 import * as path from "path";
 import * as fs from "fs";
 import { copy } from "copy-paste";
-import service, { IBaseConfig } from "./service";
+import service, { IBaseConfig, IJiraIssue } from "./service";
 
 let instance: JiraIssueProvider | null = null;
 let config = vscode.workspace.getConfiguration("jira-issue");
@@ -46,7 +46,7 @@ export class JiraIssue extends vscode.TreeItem {
   constructor(
     readonly label: string,
     readonly collapsibleState: vscode.TreeItemCollapsibleState,
-    public item: any[]
+    public item: IJiraIssue | null
   ) {
     super(label, collapsibleState);
   }
@@ -92,6 +92,13 @@ export class JiraIssueProvider
       )
     );
     context.subscriptions.push(
+      vscode.commands.registerCommand(
+        "jira-issue.check",
+        this.check,
+        this
+      )
+    );
+    context.subscriptions.push(
       vscode.window.onDidChangeActiveTextEditor(this.pull, this)
     );
     context.subscriptions.push(
@@ -111,12 +118,12 @@ export class JiraIssueProvider
         new JiraIssue(
           "All List",
           vscode.TreeItemCollapsibleState.Collapsed,
-          []
+          null
         ),
         new JiraIssue(
           "Unresolved List",
           vscode.TreeItemCollapsibleState.Collapsed,
-          []
+          null
         ),
       ];
     }
@@ -144,8 +151,8 @@ export class JiraIssueProvider
     try {
       return await service
         .searchWithQueryFromConfig(jqlList.join(" AND "))
-        .then((data: any) => {
-          const children = data.issues.map((issue: any) => {
+        .then((data) => {
+          const children = data?.issues.map((issue: IJiraIssue) => {
             const isBug = issue.fields.issuetype.name === "Bug";
             // @ts-ignore
             const statusIcon = emojiMap[issue.fields.status.name];
@@ -159,7 +166,7 @@ export class JiraIssueProvider
               issue
             );
 
-            if (issue.fields.assignee) {
+            if (issue.fields.assignee?.name === service.config?.username) {
               jiraIssue.iconPath = {
                 light: this.context.asAbsolutePath(
                   path.join("assets", "light", "sign.svg")
@@ -203,16 +210,13 @@ export class JiraIssueProvider
   }
 
   private openIssue(issue: JiraIssue) {
-    // @ts-ignore
-    const base = issue.item.self.split("/rest")[0];
-    // @ts-ignore
-    const url = vscode.Uri.parse(`${base}/browse/${issue.item.key}`);
+    const base = issue.item?.self.split("/rest")[0];
+    const url = vscode.Uri.parse(`${base}/browse/${issue.item?.key}`);
     vscode.commands.executeCommand("vscode.open", url);
   }
 
   private async copyJiraIssue(issue: JiraIssue) {
-    // @ts-ignore
-    copy(issue.item.key);
+    copy(issue.item?.key);
   }
 
   private async filter() {
@@ -221,8 +225,12 @@ export class JiraIssueProvider
   }
 
   private async assignToMe(issue: JiraIssue) {
-    // @ts-ignore
-    await service.updateAssignee(issue.item.key);
+    await service.updateAssignee(issue.item?.key || '');
+    this.refresh();
+  }
+
+  private async check(issue: JiraIssue) {
+    await service.updateAssignee(issue.item?.key || '');
     this.refresh();
   }
 
