@@ -236,7 +236,7 @@
     "@types/jira-client": "^7.1.6",
     "@types/mocha": "^10.0.1",
     "@types/node": "^16.18.34",
-    "@types/vscode": "^1.78.1",
+    "@types/vscode": "^1.59.0",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "@vscode/test-electron": "^2.3.2",
