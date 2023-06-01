@@ -3,7 +3,7 @@
   "displayName": "jira-issue",
   "description": "Make Jira issue operations easier.",
   "version": "0.0.1",
-  "packageManager": "^pnpm@7.29.2",
+  "packageManager": "pnpm@7.29.2",
   "engines": {
     "vscode": "^1.59.0"
   },
