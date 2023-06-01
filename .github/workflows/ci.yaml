@@ -27,5 +27,4 @@ jobs:
           cache: pnpm
 
       - name: Run headless test
-        with:
-          run: npm test
+        run: npm test
