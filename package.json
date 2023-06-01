@@ -4,7 +4,7 @@
   "description": "Make Jira issue operations easier.",
   "version": "0.0.1",
   "engines": {
-    "vscode": "^1.78.0"
+    "vscode": "^1.59.0"
   },
   "author": "Dlouxgit",
   "publisher": "dloux",
@@ -27,6 +27,7 @@
     "onView:jiraIssues"
   ],
   "main": "./out/extension.js",
+  "private": true,
   "contributes": {
     "viewsContainers": {
       "activitybar": [
@@ -87,6 +88,14 @@
         }
       },
       {
+        "command": "jira-issue.check",
+        "title": "set Done",
+        "icon": {
+          "light": "./assets/light/check.svg",
+          "dark": "./assets/dark/check.svg"
+        }
+      },
+      {
         "command": "jira-issue.openIssue",
         "title": "Open Issue"
       },
@@ -130,6 +139,11 @@
         },
         {
           "command": "jira-issue.assignToMe",
+          "when": "view == jira-issue  && viewItem == issue",
+          "group": "inline"
+        },
+        {
+          "command": "jira-issue.check",
           "when": "view == jira-issue  && viewItem == issue",
           "group": "inline"
         },
@@ -192,6 +206,21 @@
       }
     }
   },
+  "release": {
+		"branches": "main",
+		"verifyConditions": [
+			"@semantic-release/github"
+		],
+		"publish": [
+			"@semantic-release/github"
+		],
+		"success": [
+			"@semantic-release/github"
+		],
+		"fail": [
+			"@semantic-release/github"
+		]
+	},
   "scripts": {
     "vscode:prepublish": "pnpm run compile",
     "compile": "tsc -p ./",
