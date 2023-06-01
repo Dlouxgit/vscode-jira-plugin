@@ -11,7 +11,7 @@ on:
 jobs:
   publish:
     name: Release and publish
-    needs: test
+    needs: Test
     runs-on: ubuntu-18.04
     steps:
       - name: Checkout
