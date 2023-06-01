@@ -28,5 +28,6 @@ jobs:
           cache: pnpm
 
       - name: Run test
+        uses: GabrielBB/xvfb-action@v1.0
         with:
           run: npm test
