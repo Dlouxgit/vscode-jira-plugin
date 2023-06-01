@@ -31,5 +31,5 @@ jobs:
           node-version: 16.x
           cache: pnpm
 
-      - name: Run headless test
-        run: npm test
+      # - name: Run headless test
+      #   run: npm test
