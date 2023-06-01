@@ -1,44 +1,35 @@
-name: Release
-
-permissions:
-  contents: write
+name: CI
 
 on:
   push:
-    tags:
-      - 'v*'
     branches:
       - main
       - master
 
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  publish:
-    name: Release and publish
-    needs: test
-    runs-on: ubuntu-18.04
+  test:
+    name: Test
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout
-      - uses: actions/checkout@v3
+        uses: actions/checkout@v2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v2
+        id: pnpm-install
         with:
-          fetch-depth: 0
+          version: 7
+          run_install: true
 
-      - name: Install pnpm
-        uses: pnpm/action-setup@v2.2.1
-
-      - name: Set node
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
           node-version: 16.x
           cache: pnpm
 
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
-      # - name: Vscode release plugin
-      #   uses: JCofman/vscodeaction@master
-      #   env:
-      #     PUBLISHER_TOKEN: ${{ secrets.PUBLISHER_TOKEN }}
-      #   with:
-      #     args: publish -p $PUBLISHER_TOKEN 
+      # - name: Run headless test
+      #   run: npm test
