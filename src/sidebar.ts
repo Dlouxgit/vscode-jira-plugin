@@ -3,7 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { copy } from "copy-paste";
 import service, { IBaseConfig, IJiraIssue } from "./service";
-
+import { enEmojiMap, statusKeys, zhEmojiMap } from "./const";
 let instance: JiraIssueProvider | null = null;
 let config = vscode.workspace.getConfiguration("jira-issue");
 let workspaceConfig: IBaseConfig = {};
@@ -32,17 +32,6 @@ let mergeConfig = { ...config, ...workspaceConfig };
 
 service.setConfiguration(mergeConfig);
 
-const emojiMap = {
-  Open: "🆕",
-  "In Progress": "🕐",
-  "Doing": "🕐",
-  Resolved: "👍",
-  Done: "✅",
-  Closed: "🚪",
-  Reopened: "🔙",
-  "To Do": "📝",
-  Verity: "✔️",
-};
 export class JiraIssue extends vscode.TreeItem {
   constructor(
     readonly label: string,
@@ -159,11 +148,18 @@ export class JiraIssueProvider
         .then((data) => {
           const children = data?.issues.map((issue: IJiraIssue) => {
             const isBug = issue.fields.issuetype.name === "Bug";
-            // @ts-ignore
-            const statusIcon = emojiMap[issue.fields.status.name];
+            const name = issue.fields.status.name;
+            
+            let statusIcon: string;
+            if (name in zhEmojiMap) {
+              statusIcon = zhEmojiMap[name as keyof typeof zhEmojiMap];
+            } else {
+              statusIcon = enEmojiMap[name as keyof typeof enEmojiMap];
+            }
+            
 
             const description = `(${
-              statusIcon ? statusIcon : issue.fields.status.name
+              statusIcon ? statusIcon : name
             }${isBug ? "🐛" : ""})${issue.key}: ${issue.fields.summary}`;
             const jiraIssue = new JiraIssue(
               description,
@@ -235,7 +231,14 @@ export class JiraIssueProvider
   }
 
   private async check(issue: JiraIssue) {
-    await service.updateAssignee(issue.item?.key || '');
+    await service.setTransition(
+      issue.item?.id as string,
+      {
+        transition: {
+          id: service.doneId as string,
+        },
+      }
+    );
     this.refresh();
   }
 
