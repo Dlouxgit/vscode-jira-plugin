@@ -1,5 +1,6 @@
 import { WorkspaceConfiguration } from 'vscode';
 import * as JiraApi from 'jira-client';
+import { statusKeys } from './const';
 
 export interface IBaseConfig { 
     baseUrl?: string;
@@ -33,7 +34,7 @@ export interface IJiraIssue {
         active: boolean;
       };
       status: {
-        name: string;
+        name: statusKeys;
       };
       priority: {
         name: string;
@@ -52,6 +53,7 @@ class Service {
     public errorMessage: string = '';
     private api!: JiraApi | null;
     public config: IExtensionConfig | null = null;
+    public doneId: string | null = null;
 
     async setConfiguration(config: IExtensionConfig) {
         try {
@@ -88,6 +90,7 @@ class Service {
             this.api = new JiraApi(jiraApiOptions);
             this.config = { ...config, ...jiraApiOptions };
             await this.getCurrentUser();
+            await this.getDoneStatus();
             this.isInFaultedState = false;
             this.errorMessage = '';
         } catch (e) {
@@ -124,6 +127,18 @@ class Service {
         }
         return await this.api?.updateAssignee(issueKey, assigneeName);
     };
+
+    getDoneStatus = async () => {
+        const list = await this.api?.listStatus();
+        const doneId = list?.find((item: { name: string }) => item.name === '完成' || item.name === 'Done')?.id;
+        if (doneId !== undefined) {
+            this.doneId = doneId;
+        }
+    };
+
+    setTransition(issueKey: string, transition: { transition: { id: string }}) {
+        return this.api?.transitionIssue(issueKey, transition);
+    }
 }
 
 export default new Service();
