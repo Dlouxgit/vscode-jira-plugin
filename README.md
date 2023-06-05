@@ -2,6 +2,8 @@
 
 A simple extension for Jira issues within vscode.
 
+> This vscode extension is a slim version that only includes the most commonly used features. The more functions it has, the more complicated its usage will be, and I don't want to add unnecessary complexity, just like what prettier does.
+
 ![Jira Issues in Action](assets/jira-issue.gif)
 
 ## Features
@@ -48,6 +50,29 @@ Here are some keybinds you can use:
 - Use `Cmd+Shift+]` to set the base url
 - Use `Cmd+Shift+-` to set the username
 - Use `Cmd+Shift+\` to set the password
+
+## Extra
+
+You can create a jiraIssue.config.json file in your workspace and enter the project as the default filter content. Of course, if you set the same property like base url in the global configuration of vscode at the same time, it will override the global configuration in vscode.
+
+This is an example:
+
+```json
+{
+  "project": ["projectName"],
+  "baseUrl": "xxx"
+}
+```
+
+## Changelog
+
+[Learn about the latest improvements][changelog].
+
+[changelog]: https://github.com/Dlouxgit/vscode-jira-plugin/blob/main/CHANGELOG.md
+
+## Contributing
+
+Checkout the source code in the [GitHub Repository](https://github.com/Dlouxgit/vscode-jira-plugin).
 
 ## License
 [MIT](./License.md)
