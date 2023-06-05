@@ -3,7 +3,7 @@
 All notable changes to the "jira-issue" extension will be documented in this file.
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
-## [0.0.2] 2023-06-05
+## [0.1.0] 2023-06-05
 
 - Add Chinese mapping of jira status
 
