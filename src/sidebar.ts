@@ -147,7 +147,7 @@ export class JiraIssueProvider
         .searchWithQueryFromConfig(jqlList.join(" AND ") + ' ORDER BY updatedDate DESC')
         .then((data) => {
           const children = data?.issues.map((issue: IJiraIssue) => {
-            const isBug = issue.fields.issuetype.name === "Bug";
+            const isBug = ['Bug', '缺陷'].includes(issue.fields.issuetype.name);
             const name = issue.fields.status.name;
             
             let statusIcon: string;
