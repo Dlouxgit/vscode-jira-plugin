@@ -231,7 +231,10 @@
     "glob": "^8.1.0",
     "mocha": "^10.2.0",
     "typescript": "^5.0.4",
-    "vsce": "^2.15.0"
+    "vsce": "^2.15.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "semantic-release": "^21.0.3"
   },
   "dependencies": {
     "copy-paste": "^1.5.3",
