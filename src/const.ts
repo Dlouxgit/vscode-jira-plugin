@@ -20,7 +20,9 @@ export const zhEmojiMap = {
   已关闭: "🚪",
   重新打开: "🔙",
   待验证: "✔️",
-  "需求池": "💼"
+  "需求池": "💼",
+  修复中: '🛠️',
+  待确认: '🕵️'
 } as const;
 
 export type statusKeys = keyof typeof zhEmojiMap | keyof typeof enEmojiMap;
