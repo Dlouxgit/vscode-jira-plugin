@@ -1,3 +1,10 @@
+# [0.3.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.2.0...v0.3.0) (2023-06-28)
+
+
+### Features
+
+* add copy jira summary feat ([064195e](https://github.com/Dlouxgit/vscode-jira-plugin/commit/064195e693ff0008e61a0ae9ac538b942b3df3e4))
+
 # [0.2.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.1.1...v0.2.0) (2023-06-13)
 
 
