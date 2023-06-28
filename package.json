@@ -107,6 +107,14 @@
           "light": "./assets/light/copy.svg",
           "dark": "./assets/dark/copy.svg"
         }
+      },
+      {
+        "command": "jira-issue.copyJiraIssueTitle",
+        "title": "Copy Issue Title",
+        "icon": {
+          "light": "./assets/light/clippy.svg",
+          "dark": "./assets/dark/clippy.svg"
+        }
       }
     ],
     "menus": {
@@ -134,7 +142,17 @@
           "group": "9_cutcopypaste"
         },
         {
+          "command": "jira-issue.copyJiraIssueTitle",
+          "when": "view == jira-issue && viewItem == issue",
+          "group": "9_cutcopypaste"
+        },
+        {
           "command": "jira-issue.copyJiraIssue",
+          "when": "view == jira-issue  && viewItem == issue",
+          "group": "inline"
+        },
+        {
+          "command": "jira-issue.copyJiraIssueTitle",
           "when": "view == jira-issue  && viewItem == issue",
           "group": "inline"
         },

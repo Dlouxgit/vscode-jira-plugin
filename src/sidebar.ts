@@ -76,6 +76,13 @@ export class JiraIssueProvider
     );
     context.subscriptions.push(
       vscode.commands.registerCommand(
+        "jira-issue.copyJiraIssueTitle",
+        this.copyJiraIssueTitle,
+        this
+      )
+    );
+    context.subscriptions.push(
+      vscode.commands.registerCommand(
         "jira-issue.openIssue",
         this.openIssue,
         this
@@ -218,6 +225,10 @@ export class JiraIssueProvider
 
   private async copyJiraIssue(issue: JiraIssue) {
     copy(issue.item?.key);
+  }
+
+  private async copyJiraIssueTitle(issue: JiraIssue) {
+    copy(issue.item?.fields.summary);
   }
 
   private async filter() {
