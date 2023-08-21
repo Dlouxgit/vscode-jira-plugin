@@ -145,10 +145,14 @@ class Service {
         return this.api?.listTransitions(issueId)
             .then(async (issue) => {
                 const transitionNames = issue.transitions.map((i: { name: string }) => ({...i, label: i.name}));
+                transitionNames.unshift('cancel');
                 return vscode.window
                     .showQuickPick(transitionNames, {
                         placeHolder: 'Please select the state to be changed',
                         onDidSelectItem: item => {
+                            if (item === 'cancel') {
+                                return;
+                            }
                             // @ts-ignore
                             return this.api?.transitionIssue(issueKey, { transition: { id: item.id } })
                                 .then(() => {
