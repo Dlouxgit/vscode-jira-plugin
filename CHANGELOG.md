@@ -1,3 +1,10 @@
+## [0.4.1](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.4.0...v0.4.1) (2023-08-21)
+
+
+### Bug Fixes
+
+* add cancel button ([49d3910](https://github.com/Dlouxgit/vscode-jira-plugin/commit/49d3910be018fb6842990b1770f9c9d48d568f43))
+
 # [0.4.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.3.0...v0.4.0) (2023-08-21)
 
 
