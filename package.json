@@ -101,6 +101,10 @@
         "title": "Open Issue"
       },
       {
+        "command": "jira-issue.changeStatus",
+        "title": "Change Issue Status"
+      },
+      {
         "command": "jira-issue.copyJiraIssue",
         "title": "Copy Issue Number",
         "icon": {
@@ -133,6 +137,11 @@
       "view/item/context": [
         {
           "command": "jira-issue.openIssue",
+          "when": "view == jira-issue && viewItem == issue",
+          "group": "1_navigation"
+        },
+        {
+          "command": "jira-issue.changeStatus",
           "when": "view == jira-issue && viewItem == issue",
           "group": "1_navigation"
         },

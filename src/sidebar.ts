@@ -90,6 +90,13 @@ export class JiraIssueProvider
     );
     context.subscriptions.push(
       vscode.commands.registerCommand(
+        "jira-issue.changeStatus",
+        this.changeStatus,
+        this
+      )
+    );
+    context.subscriptions.push(
+      vscode.commands.registerCommand(
         "jira-issue.check",
         this.check,
         this
@@ -221,6 +228,11 @@ export class JiraIssueProvider
     const base = issue.item?.self.split("/rest")[0];
     const url = vscode.Uri.parse(`${base}/browse/${issue.item?.key}`);
     vscode.commands.executeCommand("vscode.open", url);
+  }
+
+  private async changeStatus(issue: JiraIssue) {
+    await service.transitionIssue(issue.item?.key || '', issue.item?.id || '');
+    this.refresh();
   }
 
   private async copyJiraIssue(issue: JiraIssue) {

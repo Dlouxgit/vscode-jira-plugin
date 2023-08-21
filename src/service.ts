@@ -1,6 +1,7 @@
 import { WorkspaceConfiguration } from 'vscode';
 import * as JiraApi from 'jira-client';
 import { statusKeys } from './const';
+import * as vscode from 'vscode';
 
 export interface IBaseConfig { 
     baseUrl?: string;
@@ -138,6 +139,31 @@ class Service {
 
     setTransition(issueKey: string, transition: { transition: { id: string }}) {
         return this.api?.transitionIssue(issueKey, transition);
+    }
+
+    transitionIssue(issueKey: string, issueId: string) {
+        return this.api?.listTransitions(issueId)
+            .then(async (issue) => {
+                const transitionNames = issue.transitions.map((i: { name: string }) => ({...i, label: i.name}));
+                return vscode.window
+                    .showQuickPick(transitionNames, {
+                        placeHolder: 'Please select the state to be changed',
+                        onDidSelectItem: item => {
+                            // @ts-ignore
+                            return this.api?.transitionIssue(issueKey, { transition: { id: item.id } })
+                                .then(() => {
+                                    // @ts-ignore
+                                    vscode.window.showInformationMessage(`Successfully updated sub-task ${issueKey} status to ${item.name}`);
+                                })
+                                .catch((error) => {
+                                    vscode.window.showInformationMessage(`Failed to update sub-task ${issueKey} status: ${error}`);
+                                });
+                        }
+                    });
+            })
+            .catch((error) => {
+                vscode.window.showInformationMessage(`Failed to retrieve issue ${issueKey}: ${error}`);
+            });
     }
 }
 
