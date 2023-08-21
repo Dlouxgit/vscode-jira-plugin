@@ -1,3 +1,10 @@
+# [0.4.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.3.0...v0.4.0) (2023-08-21)
+
+
+### Features
+
+* allow modification of issue status ([4c76152](https://github.com/Dlouxgit/vscode-jira-plugin/commit/4c761528491bdd8ab4b4bd9ac957a75b6a8bebf6))
+
 # [0.3.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.2.0...v0.3.0) (2023-06-28)
 
 
