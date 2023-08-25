@@ -1,3 +1,10 @@
+# [0.5.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.4.1...v0.5.0) (2023-08-25)
+
+
+### Features
+
+* add git commit feat ([d240fd4](https://github.com/Dlouxgit/vscode-jira-plugin/commit/d240fd457b769c155c7362e18dcd35f38305d5d1))
+
 ## [0.4.1](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.4.0...v0.4.1) (2023-08-21)
 
 
