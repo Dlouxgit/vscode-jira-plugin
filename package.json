@@ -105,6 +105,10 @@
         "title": "Change Issue Status"
       },
       {
+        "command": "jira-issue.gitCommit",
+        "title": "Commit By Issue"
+      },
+      {
         "command": "jira-issue.copyJiraIssue",
         "title": "Copy Issue Number",
         "icon": {
@@ -144,6 +148,11 @@
           "command": "jira-issue.changeStatus",
           "when": "view == jira-issue && viewItem == issue",
           "group": "1_navigation"
+        },
+        {
+          "command": "jira-issue.gitCommit",
+          "when": "view == jira-issue && viewItem == issue",
+          "group": "9_cutcopypaste"
         },
         {
           "command": "jira-issue.copyJiraIssue",

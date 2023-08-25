@@ -146,24 +146,28 @@ class Service {
             .then(async (issue) => {
                 const transitionNames = issue.transitions.map((i: { name: string }) => ({...i, label: i.name}));
                 transitionNames.unshift('cancel');
-                return vscode.window
-                    .showQuickPick(transitionNames, {
-                        placeHolder: 'Please select the state to be changed',
-                        onDidSelectItem: item => {
-                            if (item === 'cancel') {
-                                return;
-                            }
-                            // @ts-ignore
-                            return this.api?.transitionIssue(issueKey, { transition: { id: item.id } })
+                return new Promise((resolve, reject) => {
+                    vscode.window
+                        .showQuickPick(transitionNames, {
+                            placeHolder: 'Please select the state to be changed',
+                            onDidSelectItem: item => {
+                                if (item === 'cancel') {
+                                    return;
+                                }
+                                // @ts-ignore
+                                return this.api?.transitionIssue(issueKey, { transition: { id: item.id } })
                                 .then(() => {
-                                    // @ts-ignore
-                                    vscode.window.showInformationMessage(`Successfully updated sub-task ${issueKey} status to ${item.name}`);
-                                })
-                                .catch((error) => {
-                                    vscode.window.showInformationMessage(`Failed to update sub-task ${issueKey} status: ${error}`);
-                                });
-                        }
-                    });
+                                        // @ts-ignore
+                                        vscode.window.showInformationMessage(`Successfully updated sub-task ${issueKey} status to ${item.name}`);
+                                        resolve(`Successfully updated sub-task ${issueKey} status.`);
+                                    })
+                                    .catch((error) => {
+                                        vscode.window.showInformationMessage(`Failed to update sub-task ${issueKey} status: ${error}`);
+                                        reject(new Error(`Failed to update sub-task ${issueKey} status: ${error}.`));
+                                    });
+                            }
+                        });
+                })
             })
             .catch((error) => {
                 vscode.window.showInformationMessage(`Failed to retrieve issue ${issueKey}: ${error}`);

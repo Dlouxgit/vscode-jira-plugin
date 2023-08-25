@@ -3,7 +3,7 @@ import * as path from "path";
 import * as fs from "fs";
 import { copy } from "copy-paste";
 import service, { IBaseConfig, IJiraIssue } from "./service";
-import { enEmojiMap, statusKeys, zhEmojiMap } from "./const";
+import { CommitType, enEmojiMap, statusKeys, zhEmojiMap } from "./const";
 let instance: JiraIssueProvider | null = null;
 let config = vscode.workspace.getConfiguration("jira-issue");
 let workspaceConfig: IBaseConfig = {};
@@ -90,6 +90,13 @@ export class JiraIssueProvider
     );
     context.subscriptions.push(
       vscode.commands.registerCommand(
+        "jira-issue.gitCommit",
+        this.gitCommit,
+        this
+      )
+    );
+    context.subscriptions.push(
+      vscode.commands.registerCommand(
         "jira-issue.changeStatus",
         this.changeStatus,
         this
@@ -121,7 +128,7 @@ export class JiraIssueProvider
       return [
         new JiraIssue(
           "All List",
-          vscode.TreeItemCollapsibleState.Collapsed,
+          vscode.TreeItemCollapsibleState.Expanded,
           null
         ),
         new JiraIssue(
@@ -228,6 +235,40 @@ export class JiraIssueProvider
     const base = issue.item?.self.split("/rest")[0];
     const url = vscode.Uri.parse(`${base}/browse/${issue.item?.key}`);
     vscode.commands.executeCommand("vscode.open", url);
+  }
+
+  private gitCommit(issue: JiraIssue) {
+
+    const vscodeGit = vscode.extensions.getExtension("vscode.git");
+		const gitExtension = vscodeGit && vscodeGit.exports;
+    const repo = gitExtension?.getAPI(1).repositories[0];
+    
+    vscode.window.showQuickPick(CommitType, {
+      placeHolder: 'Please select the submission type to submit',
+      onDidSelectItem: (item: typeof CommitType[number]) => {
+        if (item.label === 'cancel') {
+            return;
+        }
+        
+        vscode.window
+          .showInputBox({
+            ignoreFocusOut: true,
+            password: false,
+            prompt: "Set your commit message",
+            value: `${item.label}: ${issue.item?.fields.summary} ${issue.item?.key}`
+          })
+          .then((value) => {
+            if (value === undefined || value.trim() === "") {
+              vscode.window.showInformationMessage("Cancel commit.");
+            } else {
+              const val = value.trim();
+              vscode.commands.executeCommand("workbench.view.scm");
+              repo.inputBox.value = val;
+            }
+          });
+        }
+      });
+    
   }
 
   private async changeStatus(issue: JiraIssue) {
