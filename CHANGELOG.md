@@ -1,3 +1,10 @@
+# [0.6.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.5.0...v0.6.0) (2023-08-30)
+
+
+### Features
+
+* add the feat of replacing the content of git commit message ([b92c71a](https://github.com/Dlouxgit/vscode-jira-plugin/commit/b92c71ac1ea6e0559e8881bab7b0355f1306976d))
+
 # [0.5.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.4.1...v0.5.0) (2023-08-25)
 
 
