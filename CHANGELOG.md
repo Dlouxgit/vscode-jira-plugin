@@ -1,3 +1,10 @@
+## [0.6.1](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.6.0...v0.6.1) (2023-08-30)
+
+
+### Bug Fixes
+
+* type command msg ([9283de6](https://github.com/Dlouxgit/vscode-jira-plugin/commit/9283de639ab487494dc504e2b08804b76e437c2e))
+
 # [0.6.0](https://github.com/Dlouxgit/vscode-jira-plugin/compare/v0.5.0...v0.6.0) (2023-08-30)
 
 
