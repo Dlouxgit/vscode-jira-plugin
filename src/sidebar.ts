@@ -238,7 +238,6 @@ export class JiraIssueProvider
   }
 
   private gitCommit(issue: JiraIssue) {
-
     const vscodeGit = vscode.extensions.getExtension("vscode.git");
 		const gitExtension = vscodeGit && vscodeGit.exports;
     const repo = gitExtension?.getAPI(1).repositories[0];
@@ -249,13 +248,18 @@ export class JiraIssueProvider
         if (item.label === 'cancel') {
             return;
         }
-        
+        let tipsInput = `${item.label}: ${issue.item?.fields.summary} ${issue.item?.key}`;
+        mergeConfig.replaceMethods?.forEach(([origin, transfer]) => {
+          if (origin) {
+            tipsInput = tipsInput.replace(new RegExp(origin, 'g'), transfer);
+          }
+        });
         vscode.window
           .showInputBox({
             ignoreFocusOut: true,
             password: false,
             prompt: "Set your commit message",
-            value: `${item.label}: ${issue.item?.fields.summary} ${issue.item?.key}`
+            value: tipsInput
           })
           .then((value) => {
             if (value === undefined || value.trim() === "") {
@@ -295,15 +299,16 @@ export class JiraIssueProvider
   }
 
   private async check(issue: JiraIssue) {
-    await service.setTransition(
-      issue.item?.id as string,
-      {
-        transition: {
-          id: service.doneId as string,
-        },
-      }
-    );
-    this.refresh();
+    // await service.setTransition(
+    //   issue.item?.id as string,
+    //   {
+    //     transition: {
+    //       id: service.doneId as string,
+    //     },
+    //   }
+    // );
+    // this.refresh();
+    this.gitCommit(issue);
   }
 
   public async refresh(

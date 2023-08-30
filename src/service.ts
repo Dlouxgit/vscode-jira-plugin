@@ -11,6 +11,7 @@ export interface IBaseConfig {
     jqlExpression?: string;
     password?: string; // deprecated
     project?: string | string[];
+    replaceMethods?: [string, string][]
 }
 
 export interface IJiraIssue {
