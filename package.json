@@ -90,7 +90,7 @@
       },
       {
         "command": "jira-issue.check",
-        "title": "set Done",
+        "title": "Commit By Issue",
         "icon": {
           "light": "./assets/light/check.svg",
           "dark": "./assets/dark/check.svg"
