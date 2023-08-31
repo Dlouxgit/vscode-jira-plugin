@@ -2,9 +2,11 @@
 
 A simple extension for Jira issues within vscode.
 
-> This vscode extension is a slim version that only includes the most commonly used features. The more functions it has, the more complicated its usage will be, and I don't want to add unnecessary complexity, just like what prettier does.
+> This vscode extension is a slim version that only includes the most commonly used features. The more functions it has, the more complicated its usage will be, and I don't want to add unnecessary complexity.
 
 ![Jira Issues in Action](assets/jira-issue.gif)
+
+English | [简体中文](./README-zh_CN.md)
 
 ## Features
 
