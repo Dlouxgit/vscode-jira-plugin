@@ -41,11 +41,14 @@ Bug: 🐛
 
 Right click on the tree item and a menu will appear:
 
-- OpenIssue
+- Change Issue Status
+- Open Issue
+- Commit By Issue
 - Copy Issue Number
+- Copy Issue Title
 - Assign To Me
 
-Hover over any jira issue and you can see two icons at the end of the row, click on them will trigger copy and assign to me.
+Hover over any jira issue and you can see four icons at the end of the row, click on them will trigger Assign To Me, Commit By Issue, Copy Issue Number, Copy Issue Title.
 
 The icons in the upper right corner of the main sidebar are refresh and filter.
 
@@ -76,6 +79,8 @@ This is an example:
   "baseUrl": "xxx"
 }
 ```
+
+> Open Settings and enter jira-issue.replaceMethods, modify its value to replace your git commit message, it is a regular expression
 
 ## Changelog
 
